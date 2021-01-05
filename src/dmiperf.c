@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <attr/attributes.h>
+#include <attr/xattr.h>
 
 typedef unsigned int uint_t;
 
@@ -189,8 +189,8 @@ mkfile(char *name, char *attr)
 		perror("open");
 		exit(1);
 	}
-	if (attr_setf(fd, DMFATTRNAME, attr, DMFATTRLEN, ATTR_ROOT) < 0) {
-		perror("attr_setf");
+	if (fsetxattr(fd, DMFATTRNAME, attr, DMFATTRLEN, 0) < 0) {
+		perror("fsetxattr");
 		exit(1);
 	}
 	while (bytes > 0) {
